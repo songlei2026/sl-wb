@@ -1,0 +1,14 @@
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 依赖与日志
+node_modules/
+*.log
+
+# 验证 / 截图临时产物
+__*.html
+__*.png

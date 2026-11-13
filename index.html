@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="sl-wb — 轻量本地动态流，数据只保存在你的浏览器里。" />
+  <meta name="theme-color" content="#0A0C13" />
+  <title>sl-wb</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-aura" aria-hidden="true">
+    <span class="aura aura--violet"></span>
+    <span class="aura aura--indigo"></span>
+    <span class="aura aura--pink"></span>
+    <span class="aura-grid"></span>
+  </div>
+
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="./index.html" aria-label="sl-wb 首页">
+        <span class="brand__mark" aria-hidden="true">sl</span>
+        <span class="brand__text">
+          <strong>sl-wb</strong>
+          <small>本地动态流</small>
+        </span>
+      </a>
+      <button class="profile-chip" id="profileBtn" type="button" aria-haspopup="dialog">
+        <span class="profile-chip__avatar" id="profileAvatar" aria-hidden="true">访</span>
+        <span class="profile-chip__name" id="profileName">设置昵称</span>
+        <span class="profile-chip__edit" aria-hidden="true">编辑</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="composer card" aria-labelledby="composerTitle">
+      <h2 class="sr-only" id="composerTitle">发布新动态</h2>
+      <div class="composer__row">
+        <span class="avatar avatar--self" id="composerAvatar" aria-hidden="true">访</span>
+        <div class="composer__field">
+          <label class="sr-only" for="composerInput">动态内容</label>
+          <textarea
+            id="composerInput"
+            class="composer__input"
+            placeholder="有什么想分享的？"
+            rows="1"
+            maxlength="280"
+            aria-describedby="composerHint"
+          ></textarea>
+          <p class="composer__hint" id="composerHint">按 Ctrl / ⌘ + Enter 快速发布</p>
+        </div>
+      </div>
+      <div class="composer__foot">
+        <div class="counter" id="counter" data-state="idle">
+          <svg class="counter__ring" viewBox="0 0 36 36" aria-hidden="true">
+            <circle class="counter__track" cx="18" cy="18" r="15.5"></circle>
+            <circle class="counter__bar" id="counterBar" cx="18" cy="18" r="15.5"></circle>
+          </svg>
+          <span class="counter__num" id="counterNum">0</span>
+          <span class="sr-only">/ 280 字</span>
+        </div>
+        <button class="btn btn--primary" id="publishBtn" type="button" disabled>
+          <span>发布</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h13M13 6l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="feed" aria-labelledby="feedTitle">
+      <div class="feed__head">
+        <h2 id="feedTitle">最新动态</h2>
+        <span class="feed__count" id="feedCount">0 条</span>
+      </div>
+
+      <ul class="post-list" id="postList" aria-live="polite"></ul>
+
+      <div class="empty" id="emptyState">
+        <div class="empty__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-3.9-.8L3 21l1.9-5a8.3 8.3 0 0 1-.9-3.8 8.4 8.4 0 0 1 8.5-8.4 8.4 8.4 0 0 1 8.5 8.4z" />
+          </svg>
+        </div>
+        <p class="empty__title">还没有动态</p>
+        <p class="empty__text">写下第一条想法，它会保存在这台设备的浏览器中。</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer__note">
+        <span class="dot" aria-hidden="true"></span>
+        所有内容仅保存在本机浏览器，不会上传到任何服务器
+      </p>
+      <button class="link-btn" id="clearBtn" type="button">清空本地数据</button>
+    </footer>
+  </main>
+
+  <div class="dialog" id="profileDialog" hidden>
+    <div class="dialog__scrim" data-close="1"></div>
+    <div class="dialog__panel card" role="dialog" aria-modal="true" aria-labelledby="profileDialogTitle">
+      <div class="dialog__glow" aria-hidden="true"></div>
+      <h2 class="dialog__title" id="profileDialogTitle">给自己起个名字</h2>
+      <p class="dialog__desc">昵称只保存在本地，用于给动态署名。</p>
+      <label class="field-label" for="nicknameInput">昵称</label>
+      <input
+        class="text-input"
+        id="nicknameInput"
+        type="text"
+        maxlength="16"
+        autocomplete="nickname"
+        placeholder="例如：夜航星"
+      />
+      <p class="dialog__error" id="nicknameError" role="alert" hidden>昵称不能为空</p>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" id="skipNicknameBtn" type="button">跳过，用访客</button>
+        <button class="btn btn--primary" id="saveNicknameBtn" type="button">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
