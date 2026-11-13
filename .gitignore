@@ -4,11 +4,17 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+.codebuddy/
 
-# 依赖与日志
+# 依赖、构建与覆盖率
 node_modules/
+dist/
+coverage/
+
+# 日志
 *.log
 
-# 验证 / 截图临时产物
+# 临时验证产物
 __*.html
 __*.png
+test-out.txt

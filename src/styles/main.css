@@ -675,16 +675,11 @@ body {
 
 /* 空状态 */
 .empty {
-  display: none;
   padding: 46px 24px;
   text-align: center;
   border: 1px dashed var(--line);
   border-radius: var(--r-md);
   background: rgba(255, 255, 255, 0.018);
-}
-
-.empty.is-visible {
-  display: block;
   animation: rise 0.5s var(--ease-out) both;
 }
 
